@@ -1,9 +1,11 @@
+@use './variables' as *;
+
 .navbar {
   position: sticky;
   top: 0;
   z-index: 100;
-  background-color: #ffffff;
-  border-bottom: 1px solid #e8e8e8;
+  background-color: $color-bg;
+  border-bottom: 1px solid $color-border;
 }
 
 .navbar__inner {
@@ -21,7 +23,7 @@
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: #111111;
+  color: $color-text;
   white-space: nowrap;
 }
 
@@ -35,11 +37,11 @@
   font-size: 0.9rem;
   font-weight: 400;
   letter-spacing: 0.04em;
-  color: #111111;
+  color: $color-text;
 }
 
 .navbar__link:hover {
-  color: #555555;
+  color: $color-hover;
 }
 
 .navbar__cart {
@@ -49,12 +51,12 @@
   padding: 6px;
   border: none;
   background: transparent;
-  color: #111111;
+  color: $color-text;
   cursor: pointer;
 }
 
 .navbar__cart:hover {
-  color: #555555;
+  color: $color-hover;
 }
 
 @media (max-width: 640px) {

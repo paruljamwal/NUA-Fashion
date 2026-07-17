@@ -1,8 +1,4 @@
-$color-bg: #ffffff;
-$color-text: #111111;
-$color-muted: #666666;
-$color-border: #e8e8e8;
-$color-accent: #111111;
+@use './variables' as *;
 
 * {
   margin: 0;
