@@ -25,9 +25,9 @@ function ProductCard({ product }) {
         </div>
       </Link>
 
-      <button type="button" className="product-card__btn">
+      <Link to={`/product/${product.id}`} className="product-card__btn">
         Quick Add
-      </button>
+      </Link>
     </article>
   )
 }

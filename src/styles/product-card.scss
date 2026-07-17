@@ -72,6 +72,7 @@
 }
 
 .product-card__btn {
+  @include flex-center;
   width: 100%;
   margin-top: 16px;
   padding: 12px 16px;
@@ -85,6 +86,8 @@
   letter-spacing: 0.12em;
   text-transform: uppercase;
   cursor: pointer;
+  text-align: center;
+  box-sizing: border-box;
 }
 
 .product-card__btn:hover {
