@@ -11,7 +11,7 @@ function App() {
       <main className="layout__main">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/product" element={<Product />} />
+          <Route path="/product/:id" element={<Product />} />
         </Routes>
       </main>
       <Footer />

@@ -8,6 +8,7 @@ import './styles/navbar.scss'
 import './styles/footer.scss'
 import './styles/home.scss'
 import './styles/product-card.scss'
+import './styles/product-detail.scss'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
