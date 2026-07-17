@@ -9,11 +9,17 @@
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 40px 24px;
+  padding: 48px 32px;
+}
+
+@media (max-width: 1024px) {
+  .layout__main {
+    padding: 36px 24px;
+  }
 }
 
 @media (max-width: 640px) {
   .layout__main {
-    padding: 28px 16px;
+    padding: 24px 16px;
   }
 }

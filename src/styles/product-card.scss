@@ -76,6 +76,7 @@
   width: 100%;
   margin-top: 16px;
   padding: 12px 16px;
+  min-height: 44px;
   border: 1px solid $color-text;
   background-color: transparent;
   color: $color-text;
@@ -92,12 +93,42 @@
   color: $color-bg;
 }
 
+@media (max-width: 1024px) {
+  .product-card__media {
+    padding: 22px;
+  }
+
+  .product-card__title {
+    font-size: 0.8125rem;
+  }
+}
+
 @media (max-width: 640px) {
   .product-card__media {
-    padding: 20px;
+    padding: 16px;
   }
 
   .product-card__body {
-    padding-top: 14px;
+    padding-top: 12px;
+  }
+
+  .product-card__title {
+    font-size: 0.8rem;
+    height: 2.5em;
+  }
+
+  .product-card__rating {
+    font-size: 0.7rem;
+  }
+
+  .product-card__price {
+    font-size: 0.875rem;
+  }
+
+  .product-card__btn {
+    margin-top: 12px;
+    min-height: 40px;
+    padding: 10px 12px;
+    font-size: 0.625rem;
   }
 }
