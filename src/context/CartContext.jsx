@@ -1,9 +1,23 @@
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext, useEffect, useState } from 'react'
 
 const CartContext = createContext(null)
+const CART_KEY = 'nua-cart'
+
+function getSavedCart() {
+  try {
+    const saved = localStorage.getItem(CART_KEY)
+    return saved ? JSON.parse(saved) : []
+  } catch {
+    return []
+  }
+}
 
 export function CartProvider({ children }) {
-  const [items, setItems] = useState([])
+  const [items, setItems] = useState(getSavedCart)
+
+  useEffect(() => {
+    localStorage.setItem(CART_KEY, JSON.stringify(items))
+  }, [items])
 
   const addItem = (product) => {
     setItems((prev) => {
