@@ -14,13 +14,10 @@ function ProductCard({ product }) {
 
       <div className="product-card__body">
         <h2 className="product-card__title">{product.title}</h2>
-
         <p className="product-card__rating">
-          {rating.toFixed(1)} · {count} reviews
+          {rating.toFixed(1)} / 5 · {count} reviews
         </p>
-
         <p className="product-card__price">${product.price.toFixed(2)}</p>
-
         <button type="button" className="product-card__btn">
           Quick Add
         </button>
