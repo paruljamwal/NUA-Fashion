@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { getProductById } from '../services/api'
 import { useCart } from '../context/CartContext'
@@ -77,15 +77,15 @@ function Product() {
   const isSoldOut = selectedSizeData && !selectedSizeData.inStock
   const canAddToCart = Boolean(selectedSize) && !isSoldOut
 
-  const decreaseQuantity = useCallback(() => {
+  const decreaseQuantity = () => {
     if (quantity > 1) setQuantity(quantity - 1)
-  }, [quantity])
+  }
 
-  const increaseQuantity = useCallback(() => {
+  const increaseQuantity = () => {
     if (quantity < 10) setQuantity(quantity + 1)
-  }, [quantity])
+  }
 
-  const handleAddToCart = useCallback(() => {
+  const handleAddToCart = () => {
     if (!canAddToCart) return
 
     addItem({
@@ -97,7 +97,7 @@ function Product() {
       color: selectedColorData.name,
       quantity,
     })
-  }, [canAddToCart, product.id, product.title, product.price, product.image, selectedSizeData.label, selectedColorData.name, quantity])
+  }
 
   return (
     <section className="product-detail">
@@ -112,13 +112,23 @@ function Product() {
               }`}
               onClick={() => setActiveImageIndex(index)}
             >
-              <img src={image} alt={`${product.title} view ${index + 1}`} loading="lazy" decoding="async" />
+              <img
+                src={image}
+                alt={`${product.title} view ${index + 1}`}
+                loading="lazy"
+                decoding="async"
+              />
             </button>
           ))}
         </div>
 
         <div className="product-detail__main-image">
-          <img src={gallery[activeImageIndex]} alt={product.title} loading="lazy" decoding="async" />
+          <img
+            src={gallery[activeImageIndex]}
+            alt={product.title}
+            loading="lazy"
+            decoding="async"
+          />
         </div>
       </div>
 
