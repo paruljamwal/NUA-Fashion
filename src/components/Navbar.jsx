@@ -14,12 +14,12 @@ function Navbar() {
           <Link to="/" className="navbar__brand">
             NUA Fashion
           </Link>
-
+{/* 
           <nav className="navbar__nav">
             <Link to="/" className="navbar__link">
               Home
             </Link>
-          </nav>
+          </nav> */}
 
           <button
             type="button"
