@@ -13,7 +13,6 @@ function ProductCard({ product }) {
             alt={product.title}
             className="product-card__image"
             loading="lazy"
-            decoding="async"
           />
         </div>
 

@@ -1,3 +1,4 @@
+import React from 'react'
 import { useCart } from '../context/CartContext'
 
 function CartDrawer({ isOpen, onClose }) {
@@ -103,4 +104,4 @@ function CartDrawer({ isOpen, onClose }) {
   )
 }
 
-export default CartDrawer
+export default React.memo(CartDrawer)
