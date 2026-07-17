@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none" role="img" aria-label="NUA">
+  <title>NUA Monogram</title>
+  <rect x="6" y="6" width="88" height="88" stroke="#111111" stroke-width="1.5" fill="none"/>
+  <path
+    d="M30 24V76H35L65 40V76H70V24H65L35 60V24H30Z"
+    fill="#111111"
+  />
+</svg>

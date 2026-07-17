@@ -11,15 +11,10 @@ function Navbar() {
     <>
       <header className="navbar">
         <div className="navbar__inner">
-          <Link to="/" className="navbar__brand">
-            NUA Fashion
+          <Link to="/" className="navbar__brand" aria-label="NUA Fashion Home">
+            <span className="navbar__wordmark-nua">NUA</span>
+            <span className="navbar__wordmark-sub">Fashion</span>
           </Link>
-{/* 
-          <nav className="navbar__nav">
-            <Link to="/" className="navbar__link">
-              Home
-            </Link>
-          </nav> */}
 
           <button
             type="button"

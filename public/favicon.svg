@@ -1,13 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
-  <rect width="64" height="64" rx="12" fill="#1a1a1a"/>
-  <text
-    x="32"
-    y="42"
-    text-anchor="middle"
-    font-family="Georgia, 'Times New Roman', serif"
-    font-size="32"
-    font-weight="700"
-    fill="#f5f0eb"
-    letter-spacing="1"
-  >N</text>
+  <rect x="5" y="5" width="54" height="54" stroke="#111111" stroke-width="1.25" fill="none"/>
+  <path
+    d="M20 17V47H23L41 26.5V47H44V17H41L23 37.5V17H20Z"
+    fill="#111111"
+  />
 </svg>
