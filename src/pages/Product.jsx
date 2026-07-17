@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { getProductById } from '../services/api'
+import { useCart } from '../context/CartContext'
 
-const BRANDS = ['NUA Atelier', 'Studio NUA', 'Maison Lane', 'Cove & Co'] // TODO: add brands
+const BRANDS = ['NUA Atelier', 'Studio NUA', 'Maison Lane', 'Cove & Co']
 
 const COLORS = [
   { id: 'black', name: 'Black', hex: '#111111' },
@@ -21,6 +22,7 @@ const SIZES = [
 
 function Product() {
   const { id } = useParams()
+  const { addItem } = useCart()
   const [product, setProduct] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
@@ -30,7 +32,6 @@ function Product() {
   const [selectedSize, setSelectedSize] = useState('')
   const [quantity, setQuantity] = useState(1)
 
-  // get product by id
   useEffect(() => {
     setLoading(true)
     setError(null)
@@ -64,21 +65,34 @@ function Product() {
   const brand = BRANDS[product.id % BRANDS.length]
   const oldPrice = (product.price * 1.25).toFixed(2)
   const rating = product.rating?.rate ?? 0
-  const count = product.rating?.count ?? 0 
-  const gallery = [product.image, product.image, product.image, product.image] // TODO: add more images
+  const count = product.rating?.count ?? 0
+  const gallery = [product.image, product.image, product.image, product.image]
 
-  const selectedSizeData = SIZES.find((size) => size.id === selectedSize) // TODO: add size data
-  const isSoldOut = selectedSizeData && !selectedSizeData.inStock // TODO: add sold out data
-  const canAddToCart = Boolean(selectedSize) && !isSoldOut // TODO: add add to cart data
+  const selectedSizeData = SIZES.find((size) => size.id === selectedSize)
+  const selectedColorData = COLORS.find((color) => color.id === selectedColor)
+  const isSoldOut = selectedSizeData && !selectedSizeData.inStock
+  const canAddToCart = Boolean(selectedSize) && !isSoldOut
 
-  // decrease quantity
   const decreaseQuantity = () => {
     if (quantity > 1) setQuantity(quantity - 1)
   }
 
-  // increase quantity
   const increaseQuantity = () => {
     if (quantity < 10) setQuantity(quantity + 1)
+  }
+
+  const handleAddToCart = () => {
+    if (!canAddToCart) return
+
+    addItem({
+      id: product.id,
+      title: product.title,
+      price: product.price,
+      image: product.image,
+      size: selectedSizeData.label,
+      color: selectedColorData.name,
+      quantity,
+    })
   }
 
   return (
@@ -119,7 +133,7 @@ function Product() {
 
         <div className="product-detail__option">
           <p className="product-detail__label">
-            Color: {COLORS.find((c) => c.id === selectedColor)?.name}
+            Color: {selectedColorData?.name}
           </p>
           <div className="product-detail__colors">
             {COLORS.map((color) => (
@@ -175,7 +189,7 @@ function Product() {
           type="button"
           className="product-detail__add"
           disabled={!canAddToCart}
-          onClick={() => {}}
+          onClick={handleAddToCart}
         >
           {!selectedSize ? 'Select a size' : isSoldOut ? 'Sold Out' : 'Add to Cart'}
         </button>
