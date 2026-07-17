@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import ProductCard from '../components/ProductCard'
+import ProductCardSkeleton from '../components/ProductCardSkeleton'
 import { getProducts } from '../services/api'
 
 function Home() {
@@ -7,24 +8,47 @@ function Home() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
-  useEffect(() => {
+  const fetchProducts = () => {
+    setLoading(true)
+    setError(null)
+
     getProducts()
       .then((data) => {
         setProducts(data)
         setLoading(false)
       })
-      .catch((err) => {
-        setError(err.message)
+      .catch(() => {
+        setError('Something went wrong.')
         setLoading(false)
       })
+  }
+
+  useEffect(() => {
+    fetchProducts()
   }, [])
 
   if (loading) {
-    return <p className="page-status">Loading products...</p>
+    return (
+      <section className="product-list">
+        <h1 className="product-list__heading">Products</h1>
+        <div className="product-list__grid">
+          {Array.from({ length: 8 }).map((_, index) => (
+            <ProductCardSkeleton key={index} />
+          ))}
+        </div>
+      </section>
+    )
   }
 
   if (error) {
-    return <p className="page-status page-status--error">{error}</p>
+    return (
+      <div className="page-status page-status--error">
+        <p>{error}</p>
+        <button type="button" className="page-status__retry" onClick={fetchProducts}>
+          Retry
+        </button>
+      </div>
+    )
   }
 
   return (

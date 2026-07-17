@@ -11,6 +11,25 @@
   color: $color-text;
 }
 
+.page-status__retry {
+  margin-top: 16px;
+  padding: 12px 24px;
+  min-height: 44px;
+  border: 1px solid $color-text;
+  background-color: transparent;
+  color: $color-text;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.page-status__retry:hover {
+  background-color: $color-accent;
+  color: $color-bg;
+}
+
 .product-list__heading {
   font-size: 1.5rem;
   font-weight: 500;

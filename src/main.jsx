@@ -9,6 +9,7 @@ import './styles/navbar.scss'
 import './styles/footer.scss'
 import './styles/home.scss'
 import './styles/product-card.scss'
+import './styles/product-card-skeleton.scss'
 import './styles/product-detail.scss'
 import './styles/cart-drawer.scss'
 
