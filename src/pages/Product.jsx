@@ -51,7 +51,11 @@ function Product() {
   }, [id])
 
   if (loading) {
-    return <p className="page-status">Loading product...</p>
+    return (
+      <div className="page-status">
+        <span className="spinner" aria-label="Loading" />
+      </div>
+    )
   }
 
   if (error) {
