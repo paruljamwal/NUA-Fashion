@@ -1,4 +1,5 @@
 @use './variables' as *;
+@use './mixins' as *;
 
 .navbar {
   position: sticky;
@@ -9,9 +10,7 @@
 }
 
 .navbar__inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  @include flex-between;
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px 32px;

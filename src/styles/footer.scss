@@ -1,4 +1,5 @@
 @use './variables' as *;
+@use './mixins' as *;
 
 .footer {
   border-top: 1px solid $color-border;
@@ -6,9 +7,7 @@
 }
 
 .footer__inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  @include flex-between;
   max-width: 1200px;
   margin: 0 auto;
   padding: 32px;

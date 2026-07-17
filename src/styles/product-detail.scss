@@ -1,4 +1,5 @@
 @use './variables' as *;
+@use './mixins' as *;
 
 .product-detail {
   display: grid;
@@ -39,9 +40,7 @@
 }
 
 .product-detail__main-image {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  @include flex-center;
   min-height: 520px;
   padding: 40px;
   background-color: #f6f6f6;

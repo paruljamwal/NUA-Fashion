@@ -1,4 +1,5 @@
 @use './variables' as *;
+@use './mixins' as *;
 
 .cart-drawer__overlay {
   position: fixed;
@@ -36,9 +37,7 @@
 }
 
 .cart-drawer__header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  @include flex-between;
   padding: 20px 24px;
   border-bottom: 1px solid $color-border;
 }
@@ -122,9 +121,7 @@
 }
 
 .cart-drawer__actions {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  @include flex-between;
   gap: 12px;
 }
 
@@ -177,9 +174,7 @@
 }
 
 .cart-drawer__row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  @include flex-between;
   font-size: 0.85rem;
   color: $color-muted;
   margin-bottom: 10px;
