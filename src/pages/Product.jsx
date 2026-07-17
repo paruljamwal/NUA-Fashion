@@ -77,15 +77,15 @@ function Product() {
   const isSoldOut = selectedSizeData && !selectedSizeData.inStock
   const canAddToCart = Boolean(selectedSize) && !isSoldOut
 
-  const decreaseQuantity = () => {
+  const decreaseQuantity = useCallback(() => {
     if (quantity > 1) setQuantity(quantity - 1)
-  }
+  }, [quantity])
 
-  const increaseQuantity = () => {
+  const increaseQuantity = useCallback(() => {
     if (quantity < 10) setQuantity(quantity + 1)
-  }
+  }, [quantity])
 
-  const handleAddToCart = () => {
+  const handleAddToCart = useCallback(() => {
     if (!canAddToCart) return
 
     addItem({
@@ -97,7 +97,7 @@ function Product() {
       color: selectedColorData.name,
       quantity,
     })
-  }
+  }, [canAddToCart, product.id, product.title, product.price, product.image, selectedSizeData.label, selectedColorData.name, quantity])
 
   return (
     <section className="product-detail">
