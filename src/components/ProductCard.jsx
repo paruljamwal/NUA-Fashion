@@ -12,6 +12,8 @@ function ProductCard({ product }) {
             src={product.image}
             alt={product.title}
             className="product-card__image"
+            loading="lazy"
+            decoding="async"
           />
         </div>
 

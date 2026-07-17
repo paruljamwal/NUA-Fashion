@@ -39,6 +39,8 @@ function CartDrawer({ isOpen, onClose }) {
                     src={item.image}
                     alt={item.title}
                     className="cart-drawer__image"
+                    loading="lazy"
+                    decoding="async"
                   />
 
                   <div className="cart-drawer__details">

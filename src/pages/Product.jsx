@@ -112,13 +112,13 @@ function Product() {
               }`}
               onClick={() => setActiveImageIndex(index)}
             >
-              <img src={image} alt={`${product.title} view ${index + 1}`} />
+              <img src={image} alt={`${product.title} view ${index + 1}`} loading="lazy" decoding="async" />
             </button>
           ))}
         </div>
 
         <div className="product-detail__main-image">
-          <img src={gallery[activeImageIndex]} alt={product.title} />
+          <img src={gallery[activeImageIndex]} alt={product.title} loading="lazy" decoding="async" />
         </div>
       </div>
 
