@@ -101,7 +101,7 @@ function Home() {
       />
 
       {showToast && (
-        <div className="quick-add-toast" role="status">
+        <div className="cart-toast" role="status">
           Added to cart
         </div>
       )}

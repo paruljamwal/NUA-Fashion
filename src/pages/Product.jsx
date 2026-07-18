@@ -18,6 +18,7 @@ function Product() {
 
   const [activeImageIndex, setActiveImageIndex] = useState(0)
   const [quantity, setQuantity] = useState(1)
+  const [showToast, setShowToast] = useState(false)
 
   const colorParam = searchParams.get('color')
   const sizeParam = searchParams.get('size')
@@ -63,6 +64,16 @@ function Product() {
       setQuantity(stock)
     }
   }, [selectedSize, quantity])
+
+  useEffect(() => {
+    if (!showToast) return
+
+    const timer = setTimeout(() => {
+      setShowToast(false)
+    }, 2000)
+
+    return () => clearTimeout(timer)
+  }, [showToast])
 
   if (loading) {
     return (
@@ -125,9 +136,11 @@ function Product() {
       color: selectedColorData.name,
       quantity: safeQuantity,
     })
+    setShowToast(true)
   }
 
   return (
+    <>
     <section className="product-detail">
       <div className="product-detail__gallery">
         <div className="product-detail__thumbs">
@@ -266,6 +279,13 @@ function Product() {
         </button>
       </div>
     </section>
+
+    {showToast && (
+      <div className="cart-toast" role="status">
+        Added to cart
+      </div>
+    )}
+    </>
   )
 }
 
