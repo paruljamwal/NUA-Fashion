@@ -4,6 +4,7 @@ import { getProductById } from '../services/api'
 import { useCart } from '../context/CartContext'
 import { COLORS, SIZES } from '../data/variants'
 import { mockAddToCart } from '../utils/mockApi'
+import { addRecentlyViewed } from '../utils/recentlyViewed'
 
 const BRANDS = ['NUA Atelier', 'Studio NUA', 'Maison Lane', 'Cove & Co']
 const DEFAULT_COLOR = COLORS[0].id
@@ -76,6 +77,16 @@ function Product() {
 
     return () => clearTimeout(timer)
   }, [toastMessage])
+
+  useEffect(() => {
+    if (!product) return
+
+    addRecentlyViewed({
+      id: product.id,
+      color: selectedColor,
+      size: selectedSize,
+    })
+  }, [product, selectedColor, selectedSize])
 
   if (loading) {
     return (

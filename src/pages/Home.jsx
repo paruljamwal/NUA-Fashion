@@ -1,14 +1,17 @@
 import { useEffect, useMemo, useState } from 'react'
+import CompareRecentlyViewed from '../components/CompareRecentlyViewed'
 import ProductCard from '../components/ProductCard'
 import ProductCardSkeleton from '../components/ProductCardSkeleton'
 import QuickAddDrawer from '../components/QuickAddDrawer/QuickAddDrawer'
 import { getProducts } from '../services/api'
+import { getRecentlyViewed } from '../utils/recentlyViewed'
 
 function Home() {
   const [products, setProducts] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   const [searchText, setSearchText] = useState('')
+  const [recentItems, setRecentItems] = useState([])
   const [selectedProduct, setSelectedProduct] = useState(null)
   const [isQuickAddOpen, setIsQuickAddOpen] = useState(false)
   const [toastMessage, setToastMessage] = useState('')
@@ -30,6 +33,10 @@ function Home() {
 
   useEffect(() => {
     fetchProducts()
+  }, [])
+
+  useEffect(() => {
+    setRecentItems(getRecentlyViewed())
   }, [])
 
   useEffect(() => {
@@ -61,6 +68,24 @@ function Home() {
       )
     })
   }, [products, searchText])
+
+  const compareItems = useMemo(() => {
+    if (recentItems.length < 2 || products.length === 0) return []
+
+    return recentItems
+      .map((item) => {
+        const product = products.find(
+          (entry) => Number(entry.id) === Number(item.id)
+        )
+        if (!product) return null
+        return {
+          product,
+          color: item.color,
+          size: item.size,
+        }
+      })
+      .filter(Boolean)
+  }, [recentItems, products])
 
   const openQuickAdd = (product) => {
     setSelectedProduct(product)
@@ -171,6 +196,10 @@ function Home() {
           </div>
         )}
       </section>
+
+      {compareItems.length === 2 && (
+        <CompareRecentlyViewed items={compareItems} />
+      )}
 
       <QuickAddDrawer
         product={selectedProduct}

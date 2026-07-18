@@ -12,6 +12,7 @@ import './styles/product-card.scss'
 import './styles/product-card-skeleton.scss'
 import './styles/product-detail.scss'
 import './styles/cart-drawer.scss'
+import './styles/compare.scss'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
