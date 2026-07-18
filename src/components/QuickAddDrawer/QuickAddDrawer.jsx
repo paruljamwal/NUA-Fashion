@@ -30,6 +30,15 @@ function QuickAddDrawer({ product, isOpen, onClose, onAdded }) {
     return () => document.removeEventListener('keydown', handleKeyDown)
   }, [isOpen, onClose])
 
+  useEffect(() => {
+    const sizeData = SIZES.find((size) => size.id === selectedSize)
+    const stock = sizeData?.stock ?? 0
+
+    if (stock > 0 && quantity > stock) {
+      setQuantity(stock)
+    }
+  }, [selectedSize, quantity])
+
   if (!product) return null
 
   const rating = product.rating?.rate ?? 0
@@ -48,11 +57,15 @@ function QuickAddDrawer({ product, isOpen, onClose, onAdded }) {
   }
 
   const increaseQty = () => {
-    if (quantity < 10) setQuantity(quantity + 1)
+    if (selectedStock > 0 && quantity < selectedStock) {
+      setQuantity(quantity + 1)
+    }
   }
 
   const handleAddToCart = () => {
     if (!canAddToCart) return
+
+    const safeQuantity = Math.min(quantity, selectedStock)
 
     addItem({
       id: product.id,
@@ -61,7 +74,7 @@ function QuickAddDrawer({ product, isOpen, onClose, onAdded }) {
       image: product.image,
       size: selectedSizeData.label,
       color: selectedColorData.name,
-      quantity,
+      quantity: safeQuantity,
     })
     onClose()
     onAdded()
@@ -158,11 +171,21 @@ function QuickAddDrawer({ product, isOpen, onClose, onAdded }) {
           <div className="quick-add__option">
             <p className="quick-add__label">Quantity</p>
             <div className="quick-add__qty">
-              <button type="button" onClick={decreaseQty} aria-label="Decrease quantity">
+              <button
+                type="button"
+                onClick={decreaseQty}
+                aria-label="Decrease quantity"
+                disabled={quantity <= 1}
+              >
                 −
               </button>
               <span>{quantity}</span>
-              <button type="button" onClick={increaseQty} aria-label="Increase quantity">
+              <button
+                type="button"
+                onClick={increaseQty}
+                aria-label="Increase quantity"
+                disabled={!selectedStock || quantity >= selectedStock}
+              >
                 +
               </button>
             </div>

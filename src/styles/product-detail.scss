@@ -214,6 +214,12 @@
   cursor: pointer;
 }
 
+.product-detail__qty button:disabled {
+  color: #9a9a9a;
+  cursor: not-allowed;
+  opacity: 1;
+}
+
 .product-detail__qty span {
   min-width: 44px;
   text-align: center;

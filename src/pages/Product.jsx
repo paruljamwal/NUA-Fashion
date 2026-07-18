@@ -55,6 +55,15 @@ function Product() {
       })
   }, [id])
 
+  useEffect(() => {
+    const sizeData = SIZES.find((size) => size.id === selectedSize)
+    const stock = sizeData?.stock ?? 0
+
+    if (stock > 0 && quantity > stock) {
+      setQuantity(stock)
+    }
+  }, [selectedSize, quantity])
+
   if (loading) {
     return (
       <div className="page-status">
@@ -99,11 +108,13 @@ function Product() {
   }
 
   const increaseQuantity = () => {
-    if (quantity < 10) setQuantity(quantity + 1)
+    if (quantity < selectedStock) setQuantity(quantity + 1)
   }
 
   const handleAddToCart = () => {
     if (!canAddToCart) return
+
+    const safeQuantity = Math.min(quantity, selectedStock)
 
     addItem({
       id: product.id,
@@ -112,7 +123,7 @@ function Product() {
       image: product.image,
       size: selectedSizeData.label,
       color: selectedColorData.name,
-      quantity,
+      quantity: safeQuantity,
     })
   }
 
@@ -225,11 +236,21 @@ function Product() {
         <div className="product-detail__option">
           <p className="product-detail__label">Quantity</p>
           <div className="product-detail__qty">
-            <button type="button" onClick={decreaseQuantity} aria-label="Decrease quantity">
+            <button
+              type="button"
+              onClick={decreaseQuantity}
+              aria-label="Decrease quantity"
+              disabled={quantity <= 1}
+            >
               −
             </button>
             <span>{quantity}</span>
-            <button type="button" onClick={increaseQuantity} aria-label="Increase quantity">
+            <button
+              type="button"
+              onClick={increaseQuantity}
+              aria-label="Increase quantity"
+              disabled={quantity >= selectedStock}
+            >
               +
             </button>
           </div>
