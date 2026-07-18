@@ -10,7 +10,7 @@ function Home() {
   const [error, setError] = useState(null)
   const [selectedProduct, setSelectedProduct] = useState(null)
   const [isQuickAddOpen, setIsQuickAddOpen] = useState(false)
-  const [showToast, setShowToast] = useState(false)
+  const [toastMessage, setToastMessage] = useState('')
 
   const fetchProducts = () => {
     setLoading(true)
@@ -32,14 +32,14 @@ function Home() {
   }, [])
 
   useEffect(() => {
-    if (!showToast) return
+    if (!toastMessage) return
 
     const timer = setTimeout(() => {
-      setShowToast(false)
+      setToastMessage('')
     }, 2000)
 
     return () => clearTimeout(timer)
-  }, [showToast])
+  }, [toastMessage])
 
   const openQuickAdd = (product) => {
     setSelectedProduct(product)
@@ -51,7 +51,11 @@ function Home() {
   }
 
   const handleAdded = () => {
-    setShowToast(true)
+    setToastMessage('Added to cart')
+  }
+
+  const handleAddError = () => {
+    setToastMessage('Unable to add item. Please try again.')
   }
 
   if (loading) {
@@ -98,11 +102,12 @@ function Home() {
         isOpen={isQuickAddOpen}
         onClose={closeQuickAdd}
         onAdded={handleAdded}
+        onError={handleAddError}
       />
 
-      {showToast && (
+      {toastMessage && (
         <div className="cart-toast" role="status">
-          Added to cart
+          {toastMessage}
         </div>
       )}
     </>

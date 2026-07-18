@@ -3,6 +3,7 @@ import { useParams, useSearchParams } from 'react-router-dom'
 import { getProductById } from '../services/api'
 import { useCart } from '../context/CartContext'
 import { COLORS, SIZES } from '../data/variants'
+import { mockAddToCart } from '../utils/mockApi'
 
 const BRANDS = ['NUA Atelier', 'Studio NUA', 'Maison Lane', 'Cove & Co']
 const DEFAULT_COLOR = COLORS[0].id
@@ -18,7 +19,8 @@ function Product() {
 
   const [activeImageIndex, setActiveImageIndex] = useState(0)
   const [quantity, setQuantity] = useState(1)
-  const [showToast, setShowToast] = useState(false)
+  const [toastMessage, setToastMessage] = useState('')
+  const [isAdding, setIsAdding] = useState(false)
 
   const colorParam = searchParams.get('color')
   const sizeParam = searchParams.get('size')
@@ -66,14 +68,14 @@ function Product() {
   }, [selectedSize, quantity])
 
   useEffect(() => {
-    if (!showToast) return
+    if (!toastMessage) return
 
     const timer = setTimeout(() => {
-      setShowToast(false)
+      setToastMessage('')
     }, 2000)
 
     return () => clearTimeout(timer)
-  }, [showToast])
+  }, [toastMessage])
 
   if (loading) {
     return (
@@ -122,21 +124,30 @@ function Product() {
     if (quantity < selectedStock) setQuantity(quantity + 1)
   }
 
-  const handleAddToCart = () => {
-    if (!canAddToCart) return
+  const handleAddToCart = async () => {
+    if (!canAddToCart || isAdding) return
 
     const safeQuantity = Math.min(quantity, selectedStock)
+    setIsAdding(true)
 
-    addItem({
-      id: product.id,
-      title: product.title,
-      price: product.price,
-      image: product.image,
-      size: selectedSizeData.label,
-      color: selectedColorData.name,
-      quantity: safeQuantity,
-    })
-    setShowToast(true)
+    try {
+      await mockAddToCart()
+
+      addItem({
+        id: product.id,
+        title: product.title,
+        price: product.price,
+        image: product.image,
+        size: selectedSizeData.label,
+        color: selectedColorData.name,
+        quantity: safeQuantity,
+      })
+      setToastMessage('Added to cart')
+    } catch {
+      setToastMessage('Unable to add item. Please try again.')
+    } finally {
+      setIsAdding(false)
+    }
   }
 
   return (
@@ -272,17 +283,17 @@ function Product() {
         <button
           type="button"
           className="product-detail__add"
-          disabled={!canAddToCart}
+          disabled={!canAddToCart || isAdding}
           onClick={handleAddToCart}
         >
-          {isSoldOut ? 'Sold Out' : 'Add to Cart'}
+          {isAdding ? 'Adding...' : isSoldOut ? 'Sold Out' : 'Add to Cart'}
         </button>
       </div>
     </section>
 
-    {showToast && (
+    {toastMessage && (
       <div className="cart-toast" role="status">
-        Added to cart
+        {toastMessage}
       </div>
     )}
     </>

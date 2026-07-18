@@ -1,19 +1,22 @@
 import { useEffect, useState } from 'react'
 import { useCart } from '../../context/CartContext'
 import { COLORS, SIZES } from '../../data/variants'
+import { mockAddToCart } from '../../utils/mockApi'
 import './QuickAddDrawer.scss'
 
-function QuickAddDrawer({ product, isOpen, onClose, onAdded }) {
+function QuickAddDrawer({ product, isOpen, onClose, onAdded, onError }) {
   const { addItem } = useCart()
   const [selectedSize, setSelectedSize] = useState('')
   const [selectedColor, setSelectedColor] = useState(COLORS[0].id)
   const [quantity, setQuantity] = useState(1)
+  const [isAdding, setIsAdding] = useState(false)
 
   useEffect(() => {
     if (isOpen) {
       setSelectedSize('')
       setSelectedColor(COLORS[0].id)
       setQuantity(1)
+      setIsAdding(false)
     }
   }, [isOpen, product?.id])
 
@@ -62,22 +65,31 @@ function QuickAddDrawer({ product, isOpen, onClose, onAdded }) {
     }
   }
 
-  const handleAddToCart = () => {
-    if (!canAddToCart) return
+  const handleAddToCart = async () => {
+    if (!canAddToCart || isAdding) return
 
     const safeQuantity = Math.min(quantity, selectedStock)
+    setIsAdding(true)
 
-    addItem({
-      id: product.id,
-      title: product.title,
-      price: product.price,
-      image: product.image,
-      size: selectedSizeData.label,
-      color: selectedColorData.name,
-      quantity: safeQuantity,
-    })
-    onClose()
-    onAdded()
+    try {
+      await mockAddToCart()
+
+      addItem({
+        id: product.id,
+        title: product.title,
+        price: product.price,
+        image: product.image,
+        size: selectedSizeData.label,
+        color: selectedColorData.name,
+        quantity: safeQuantity,
+      })
+      onClose()
+      onAdded()
+    } catch {
+      onError?.()
+    } finally {
+      setIsAdding(false)
+    }
   }
 
   return (
@@ -200,10 +212,16 @@ function QuickAddDrawer({ product, isOpen, onClose, onAdded }) {
           <button
             type="button"
             className="quick-add__submit"
-            disabled={!canAddToCart}
+            disabled={!canAddToCart || isAdding}
             onClick={handleAddToCart}
           >
-            {!selectedSize ? 'Select a size' : isSoldOut ? 'Sold Out' : 'Add to Cart'}
+            {isAdding
+              ? 'Adding...'
+              : !selectedSize
+                ? 'Select a size'
+                : isSoldOut
+                  ? 'Sold Out'
+                  : 'Add to Cart'}
           </button>
         </div>
       </aside>
