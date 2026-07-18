@@ -1,28 +1,47 @@
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useSearchParams } from 'react-router-dom'
 import { getProductById } from '../services/api'
 import { useCart } from '../context/CartContext'
 import { COLORS, SIZES } from '../data/variants'
 
 const BRANDS = ['NUA Atelier', 'Studio NUA', 'Maison Lane', 'Cove & Co']
+const DEFAULT_COLOR = COLORS[0].id
+const DEFAULT_SIZE = 's'
 
 function Product() {
   const { id } = useParams()
+  const [searchParams, setSearchParams] = useSearchParams()
   const { addItem } = useCart()
   const [product, setProduct] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
   const [activeImageIndex, setActiveImageIndex] = useState(0)
-  const [selectedColor, setSelectedColor] = useState(COLORS[0].id)
-  const [selectedSize, setSelectedSize] = useState('')
   const [quantity, setQuantity] = useState(1)
+
+  const colorParam = searchParams.get('color')
+  const sizeParam = searchParams.get('size')
+
+  const selectedColor = COLORS.some((color) => color.id === colorParam)
+    ? colorParam
+    : DEFAULT_COLOR
+  const selectedSize = SIZES.some((size) => size.id === sizeParam)
+    ? sizeParam
+    : DEFAULT_SIZE
+
+  useEffect(() => {
+    if (colorParam !== selectedColor || sizeParam !== selectedSize) {
+      setSearchParams(
+        { color: selectedColor, size: selectedSize },
+        { replace: true }
+      )
+    }
+  }, [colorParam, sizeParam, selectedColor, selectedSize, setSearchParams])
 
   useEffect(() => {
     setLoading(true)
     setError(null)
     setActiveImageIndex(0)
-    setSelectedSize('')
     setQuantity(1)
 
     getProductById(id)
@@ -62,6 +81,14 @@ function Product() {
   const selectedColorData = COLORS.find((color) => color.id === selectedColor)
   const isSoldOut = selectedSizeData && !selectedSizeData.inStock
   const canAddToCart = Boolean(selectedSize) && !isSoldOut
+
+  const updateColor = (color) => {
+    setSearchParams({ color, size: selectedSize })
+  }
+
+  const updateSize = (size) => {
+    setSearchParams({ color: selectedColor, size })
+  }
 
   const decreaseQuantity = () => {
     if (quantity > 1) setQuantity(quantity - 1)
@@ -145,7 +172,7 @@ function Product() {
                 }`}
                 style={{ backgroundColor: color.hex }}
                 aria-label={color.name}
-                onClick={() => setSelectedColor(color.id)}
+                onClick={() => updateColor(color.id)}
               />
             ))}
           </div>
@@ -161,7 +188,7 @@ function Product() {
                 className={`product-detail__size ${
                   selectedSize === size.id ? 'is-active' : ''
                 } ${!size.inStock ? 'is-soldout' : ''}`}
-                onClick={() => setSelectedSize(size.id)}
+                onClick={() => updateSize(size.id)}
               >
                 {size.label}
               </button>
@@ -191,7 +218,7 @@ function Product() {
           disabled={!canAddToCart}
           onClick={handleAddToCart}
         >
-          {!selectedSize ? 'Select a size' : isSoldOut ? 'Sold Out' : 'Add to Cart'}
+          {isSoldOut ? 'Sold Out' : 'Add to Cart'}
         </button>
       </div>
     </section>
