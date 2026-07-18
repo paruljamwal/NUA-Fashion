@@ -1,8 +1,13 @@
 import { Link } from 'react-router-dom'
 
-function ProductCard({ product }) {
+function ProductCard({ product, onQuickAdd }) {
   const rating = product.rating?.rate ?? 0
   const count = product.rating?.count ?? 0
+
+  const handleQuickAdd = (event) => {
+    event.preventDefault()
+    onQuickAdd(product)
+  }
 
   return (
     <article className="product-card">
@@ -25,9 +30,9 @@ function ProductCard({ product }) {
         </div>
       </Link>
 
-      <Link to={`/product/${product.id}`} className="product-card__btn">
+      <button type="button" className="product-card__btn" onClick={handleQuickAdd}>
         Quick Add
-      </Link>
+      </button>
     </article>
   )
 }
