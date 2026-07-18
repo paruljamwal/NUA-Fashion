@@ -6,9 +6,9 @@ export const COLORS = [
 ]
 
 export const SIZES = [
-  { id: 'xs', label: 'XS', inStock: true },
-  { id: 's', label: 'S', inStock: true },
-  { id: 'm', label: 'M', inStock: false },
-  { id: 'l', label: 'L', inStock: true },
-  { id: 'xl', label: 'XL', inStock: true },
+  { id: 'xs', label: 'XS', stock: 10 },
+  { id: 's', label: 'S', stock: 12 },
+  { id: 'm', label: 'M', stock: 3 },
+  { id: 'l', label: 'L', stock: 0 },
+  { id: 'xl', label: 'XL', stock: 8 },
 ]

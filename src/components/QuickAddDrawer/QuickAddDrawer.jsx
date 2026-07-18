@@ -38,7 +38,9 @@ function QuickAddDrawer({ product, isOpen, onClose, onAdded }) {
 
   const selectedSizeData = SIZES.find((size) => size.id === selectedSize)
   const selectedColorData = COLORS.find((color) => color.id === selectedColor)
-  const isSoldOut = selectedSizeData && !selectedSizeData.inStock
+  const selectedStock = selectedSizeData?.stock ?? 0
+  const isSoldOut = selectedStock === 0
+  const isLowStock = selectedStock > 0 && selectedStock <= 5
   const canAddToCart = Boolean(selectedSize) && !isSoldOut
 
   const decreaseQty = () => {
@@ -121,21 +123,35 @@ function QuickAddDrawer({ product, isOpen, onClose, onAdded }) {
           <div className="quick-add__option">
             <p className="quick-add__label">Size</p>
             <div className="quick-add__choices">
-              {SIZES.map((size) => (
-                <button
-                  key={size.id}
-                  type="button"
-                  className={`quick-add__choice ${
-                    selectedSize === size.id ? 'is-active' : ''
-                  } ${!size.inStock ? 'is-soldout' : ''}`}
-                  onClick={() => setSelectedSize(size.id)}
-                >
-                  {size.label}
-                </button>
-              ))}
+              {SIZES.map((size) => {
+                const isLow = size.stock > 0 && size.stock <= 5
+                const isOut = size.stock === 0
+
+                return (
+                  <button
+                    key={size.id}
+                    type="button"
+                    className={`quick-add__choice ${
+                      selectedSize === size.id ? 'is-active' : ''
+                    } ${isLow ? 'is-low' : ''} ${isOut ? 'is-soldout' : ''}`}
+                    onClick={() => {
+                      if (size.stock === 0) return
+                      setSelectedSize(size.id)
+                    }}
+                    disabled={isOut}
+                  >
+                    {size.label}
+                  </button>
+                )
+              })}
             </div>
             {isSoldOut && (
               <p className="quick-add__soldout">This size is sold out.</p>
+            )}
+            {isLowStock && (
+              <p className="quick-add__low-stock">
+                Only {selectedStock} left in stock
+              </p>
             )}
           </div>
 

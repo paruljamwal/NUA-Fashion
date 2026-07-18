@@ -79,15 +79,19 @@ function Product() {
 
   const selectedSizeData = SIZES.find((size) => size.id === selectedSize)
   const selectedColorData = COLORS.find((color) => color.id === selectedColor)
-  const isSoldOut = selectedSizeData && !selectedSizeData.inStock
+  const selectedStock = selectedSizeData?.stock ?? 0
+  const isSoldOut = selectedStock === 0
+  const isLowStock = selectedStock > 0 && selectedStock <= 5
   const canAddToCart = Boolean(selectedSize) && !isSoldOut
 
   const updateColor = (color) => {
     setSearchParams({ color, size: selectedSize })
   }
 
-  const updateSize = (size) => {
-    setSearchParams({ color: selectedColor, size })
+  const updateSize = (sizeId) => {
+    const size = SIZES.find((item) => item.id === sizeId)
+    if (!size || size.stock === 0) return
+    setSearchParams({ color: selectedColor, size: sizeId })
   }
 
   const decreaseQuantity = () => {
@@ -181,21 +185,40 @@ function Product() {
         <div className="product-detail__option">
           <p className="product-detail__label">Size</p>
           <div className="product-detail__sizes">
-            {SIZES.map((size) => (
-              <button
-                key={size.id}
-                type="button"
-                className={`product-detail__size ${
-                  selectedSize === size.id ? 'is-active' : ''
-                } ${!size.inStock ? 'is-soldout' : ''}`}
-                onClick={() => updateSize(size.id)}
-              >
-                {size.label}
-              </button>
-            ))}
+            {SIZES.map((size) => {
+              const isLow = size.stock > 0 && size.stock <= 5
+              const isOut = size.stock === 0
+
+              return (
+                <button
+                  key={size.id}
+                  type="button"
+                  className={`product-detail__size ${
+                    selectedSize === size.id ? 'is-active' : ''
+                  } ${isLow ? 'is-low' : ''} ${isOut ? 'is-soldout' : ''}`}
+                  onClick={() => updateSize(size.id)}
+                  disabled={isOut}
+                >
+                  <span className="product-detail__size-label">{size.label}</span>
+                  {isLow && (
+                    <span className="product-detail__stock-badge">
+                      Only {size.stock} left
+                    </span>
+                  )}
+                  {isOut && (
+                    <span className="product-detail__stock-badge">Sold Out</span>
+                  )}
+                </button>
+              )
+            })}
           </div>
           {isSoldOut && (
             <p className="product-detail__soldout">This size is sold out.</p>
+          )}
+          {isLowStock && (
+            <p className="product-detail__low-stock">
+              Only {selectedStock} left in stock
+            </p>
           )}
         </div>
 

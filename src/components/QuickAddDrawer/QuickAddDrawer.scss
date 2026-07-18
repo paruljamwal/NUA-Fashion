@@ -151,15 +151,27 @@
   color: $color-bg;
 }
 
+.quick-add__choice.is-low {
+  border-color: #e67e22;
+}
+
 .quick-add__choice.is-soldout {
-  opacity: 0.4;
-  text-decoration: line-through;
+  opacity: 0.45;
+  color: $color-muted;
+  background-color: #f3f3f3;
+  cursor: not-allowed;
 }
 
 .quick-add__soldout {
   margin-top: 10px;
   font-size: 0.8rem;
   color: $color-muted;
+}
+
+.quick-add__low-stock {
+  margin-top: 10px;
+  font-size: 0.8rem;
+  color: #e67e22;
 }
 
 .quick-add__qty {
