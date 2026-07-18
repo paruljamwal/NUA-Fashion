@@ -70,10 +70,33 @@
 }
 
 .cart-drawer__empty {
-  font-size: 0.9rem;
-  color: $color-muted;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
-  padding: 40px 0;
+  padding: 48px 12px 32px;
+}
+
+.cart-drawer__empty-art {
+  width: 96px;
+  height: 96px;
+  margin-bottom: 20px;
+  opacity: 0.9;
+}
+
+.cart-drawer__empty-title {
+  margin-bottom: 6px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: $color-text;
+}
+
+.cart-drawer__empty-text {
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: $color-muted;
 }
 
 .cart-drawer__list {

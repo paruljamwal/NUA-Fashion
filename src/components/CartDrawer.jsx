@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import emptyCartIllustration from '../assets/empty-cart.svg'
 import { useCart } from '../context/CartContext'
 
 function CartDrawer({ isOpen, onClose }) {
@@ -51,7 +52,17 @@ function CartDrawer({ isOpen, onClose }) {
 
         <div className="cart-drawer__body">
           {items.length === 0 ? (
-            <p className="cart-drawer__empty">Your cart is empty.</p>
+            <div className="cart-drawer__empty">
+              <img
+                src={emptyCartIllustration}
+                alt=""
+                className="cart-drawer__empty-art"
+              />
+              <p className="cart-drawer__empty-title">Your cart is empty</p>
+              <p className="cart-drawer__empty-text">
+                Discover pieces from the NUA collection.
+              </p>
+            </div>
           ) : (
             <ul className="cart-drawer__list">
               {items.map((item) => (
