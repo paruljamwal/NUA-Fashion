@@ -56,6 +56,54 @@ https://github.com/paruljamwal/NUA-Fashion
 
 ---
 
+## Performance (Before Optimization)
+
+Baseline Lighthouse, build, and network results captured before any performance work.
+
+### Lighthouse — Mobile
+
+![Lighthouse Mobile Before](./screenshots/lighthouse-mobile-before.png)
+
+![Lighthouse Mobile Metrics Before](./screenshots/lighthouse-mobile-before-metrics.png)
+
+### Lighthouse — Desktop
+
+![Lighthouse Desktop Before](./screenshots/lighthouse-desktop-before.png)
+
+![Lighthouse Desktop Diagnostics Before](./screenshots/lighthouse-desktop-before-diagnostics.png)
+
+### Production Build
+
+![Build Before](./screenshots/build-before.png)
+
+### Chunking / Network
+
+![Chunking Before](./screenshots/chunking-before.png)
+
+---
+
+## Performance (After Optimization)
+
+Lighthouse and build results after performance improvements (lazy routes, code splitting, and related optimizations).
+
+### Lighthouse — Desktop
+
+![Lighthouse Desktop After](./screenshots/lighthouse-desktop-after.png)
+
+![Lighthouse Desktop Metrics After](./screenshots/lighthouse-desktop-after-metrics.png)
+
+### Lighthouse — Mobile
+
+![Lighthouse Mobile After](./screenshots/lighthouse-mobile-after.png)
+
+![Lighthouse Mobile Metrics After](./screenshots/lighthouse-mobile-after-metrics.png)
+
+### Production Build
+
+![Build After](./screenshots/build-after.png)
+
+---
+
 ## Features
 
 - Product listing
