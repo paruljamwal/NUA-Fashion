@@ -1,10 +1,33 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useCart } from '../context/CartContext'
 
 function CartDrawer({ isOpen, onClose }) {
+  const navigate = useNavigate()
   const { items, removeItem, changeQty, subtotal } = useCart()
+  const [toastMessage, setToastMessage] = useState('')
 
   const grandTotal = subtotal
+
+  useEffect(() => {
+    if (!toastMessage) return
+
+    const timer = setTimeout(() => {
+      setToastMessage('')
+    }, 2000)
+
+    return () => clearTimeout(timer)
+  }, [toastMessage])
+
+  const handleContinueShopping = () => {
+    onClose()
+    navigate('/')
+  }
+
+  const handleProceedToBuy = () => {
+    onClose()
+    setToastMessage('Checkout coming soon')
+  }
 
   return (
     <>
@@ -90,16 +113,40 @@ function CartDrawer({ isOpen, onClose }) {
         </div>
 
         <div className="cart-drawer__footer">
-          <div className="cart-drawer__row">
-            <span>Subtotal</span>
-            <span>${subtotal.toFixed(2)}</span>
-          </div>
-          <div className="cart-drawer__row cart-drawer__row--total">
-            <span>Grand Total</span>
-            <span>${grandTotal.toFixed(2)}</span>
-          </div>
+          {items.length > 0 && (
+            <>
+              <div className="cart-drawer__row">
+                <span>Subtotal</span>
+                <span>${subtotal.toFixed(2)}</span>
+              </div>
+              <div className="cart-drawer__row cart-drawer__row--total">
+                <span>Grand Total</span>
+                <span>${grandTotal.toFixed(2)}</span>
+              </div>
+              <button
+                type="button"
+                className="cart-drawer__buy"
+                onClick={handleProceedToBuy}
+              >
+                Proceed to Buy
+              </button>
+            </>
+          )}
+          <button
+            type="button"
+            className="cart-drawer__continue"
+            onClick={handleContinueShopping}
+          >
+            Continue Shopping
+          </button>
         </div>
       </aside>
+
+      {toastMessage && (
+        <div className="cart-toast" role="status">
+          {toastMessage}
+        </div>
+      )}
     </>
   )
 }
