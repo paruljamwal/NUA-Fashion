@@ -167,3 +167,32 @@
     max-width: none;
   }
 }
+
+@media (max-width: 480px) {
+  .compare {
+    margin-top: 32px;
+    padding-top: 24px;
+  }
+
+  .compare__heading {
+    font-size: 1rem;
+    overflow-wrap: break-word;
+  }
+
+  .compare__subtitle {
+    font-size: 0.8rem;
+  }
+
+  .compare__summary {
+    gap: 12px;
+  }
+
+  .compare__summary-item {
+    min-width: 0;
+    flex: 1 1 calc(50% - 6px);
+  }
+
+  .compare__summary-value {
+    font-size: 0.875rem;
+  }
+}

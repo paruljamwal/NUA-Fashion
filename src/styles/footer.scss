@@ -55,6 +55,19 @@
   }
 
   .footer__social {
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer__inner {
+    padding: 20px 12px;
+  }
+
+  .footer__copy {
+    max-width: 100%;
+    overflow-wrap: break-word;
   }
 }

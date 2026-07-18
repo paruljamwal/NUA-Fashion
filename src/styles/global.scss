@@ -6,6 +6,12 @@
   box-sizing: border-box;
 }
 
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
 body {
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -38,11 +44,21 @@ button {
   bottom: 24px;
   left: 50%;
   z-index: 300;
+  max-width: calc(100% - 32px);
   padding: 12px 20px;
   background-color: $color-text;
   color: $color-bg;
   font-size: 0.8rem;
   letter-spacing: 0.04em;
+  text-align: center;
   transform: translateX(-50%);
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+}
+
+@media (max-width: 480px) {
+  .cart-toast {
+    bottom: 16px;
+    padding: 10px 14px;
+    font-size: 0.75rem;
+  }
 }

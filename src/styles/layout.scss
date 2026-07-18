@@ -23,3 +23,9 @@
     padding: 24px 16px;
   }
 }
+
+@media (max-width: 480px) {
+  .layout__main {
+    padding: 20px 12px;
+  }
+}

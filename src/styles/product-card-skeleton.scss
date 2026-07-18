@@ -90,3 +90,13 @@
     height: 40px;
   }
 }
+
+@media (max-width: 480px) {
+  .product-card-skeleton {
+    padding: 16px;
+  }
+
+  .product-card-skeleton__btn {
+    height: 44px;
+  }
+}

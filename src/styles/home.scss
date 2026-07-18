@@ -227,3 +227,27 @@
     font-size: 0.875rem;
   }
 }
+
+@media (max-width: 480px) {
+  .product-list__header {
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .product-list__heading {
+    font-size: 1rem;
+  }
+
+  .product-list__search {
+    width: 100%;
+  }
+
+  .product-list__grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .product-list__empty {
+    padding: 40px 8px 16px;
+  }
+}

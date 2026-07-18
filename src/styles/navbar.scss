@@ -22,6 +22,7 @@
   flex-direction: column;
   align-items: flex-start;
   gap: 4px;
+  min-width: 0;
   color: $color-text;
 }
 
@@ -49,6 +50,7 @@
 .navbar__cart {
   position: relative;
   display: inline-flex;
+  flex-shrink: 0;
   align-items: center;
   justify-content: center;
   min-width: 44px;
@@ -104,5 +106,22 @@
   .navbar__cart {
     min-width: 40px;
     min-height: 40px;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar__inner {
+    padding: 12px;
+    gap: 10px;
+  }
+
+  .navbar__wordmark-nua {
+    font-size: 1.25rem;
+    letter-spacing: 0.28em;
+  }
+
+  .navbar__wordmark-sub {
+    font-size: 0.45rem;
+    letter-spacing: 0.4em;
   }
 }
